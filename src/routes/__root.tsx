@@ -76,9 +76,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "EcoLoop by Safaricom" },
+      { title: "M-Taka by Safaricom" },
       { name: "description", content: "Device lifecycle tracking & Green Credits platform by Safaricom." },
-      { property: "og:title", content: "EcoLoop by Safaricom" },
+      { property: "og:title", content: "M-Taka by Safaricom" },
       { property: "og:description", content: "Recycle devices, earn Green Credits, save CO₂." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

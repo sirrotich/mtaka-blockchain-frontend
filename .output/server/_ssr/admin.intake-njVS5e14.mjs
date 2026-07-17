@@ -382,7 +382,7 @@ function RegisterModal({ onClose, onCreated, prefill }) {
 						children: "Register New Customer"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						className: "text-xs text-muted-foreground",
-						children: "Onboard to EcoLoop & Green Credits"
+						children: "Onboard to M-Taka & Green Credits"
 					})] })]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {

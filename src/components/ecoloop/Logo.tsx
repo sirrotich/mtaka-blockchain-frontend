@@ -7,7 +7,7 @@ export function Logo({ subtitle = true }: { subtitle?: boolean }) {
         <Leaf className="h-5 w-5 text-primary-foreground" strokeWidth={2.5} />
       </div>
       <div className="leading-tight">
-        <div className="font-display text-lg font-bold tracking-tight">EcoLoop</div>
+        <div className="font-display text-lg font-bold tracking-tight">M-Taka</div>
         {subtitle && (
           <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
             by Safaricom

@@ -5,7 +5,7 @@ import { PortalShell } from "@/components/ecoloop/PortalShell";
 import { customerApi, type CustomerProfile, type CreditTransaction } from "@/lib/api";
 
 export const Route = createFileRoute("/customer/wallet")({
-  head: () => ({ meta: [{ title: "Green Wallet · EcoLoop" }] }),
+  head: () => ({ meta: [{ title: "Green Wallet · M-Taka" }] }),
   component: WalletPage,
 });
 

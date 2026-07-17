@@ -13,7 +13,7 @@ import {
 } from "@/lib/ecoloop-store";
 
 export const Route = createFileRoute("/admin/intake")({
-  head: () => ({ meta: [{ title: "New Intake · EcoLoop Admin" }] }),
+  head: () => ({ meta: [{ title: "New Intake · M-Taka Admin" }] }),
   component: IntakeFlow,
 });
 
@@ -262,7 +262,7 @@ function RegisterModal({ onClose, onCreated, prefill }: { onClose: () => void; o
           </div>
           <div>
             <h3 className="font-display text-lg font-bold">Register New Customer</h3>
-            <p className="text-xs text-muted-foreground">Onboard to EcoLoop & Green Credits</p>
+            <p className="text-xs text-muted-foreground">Onboard to M-Taka & Green Credits</p>
           </div>
         </div>
         <div className="mt-5 space-y-3">

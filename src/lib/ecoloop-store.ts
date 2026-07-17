@@ -1,4 +1,4 @@
-// Lightweight in-memory mock data store for EcoLoop demo.
+// Lightweight in-memory mock data store for M-Taka demo.
 // Persists to localStorage on client; safe defaults on SSR.
 
 export type DeviceType =

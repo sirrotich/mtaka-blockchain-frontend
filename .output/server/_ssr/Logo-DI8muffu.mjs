@@ -15,7 +15,7 @@ function Logo({ subtitle = true }) {
 			className: "leading-tight",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "font-display text-lg font-bold tracking-tight",
-				children: "EcoLoop"
+				children: "M-Taka"
 			}), subtitle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground",
 				children: "by Safaricom"

@@ -5,7 +5,7 @@ import { PortalShell } from "@/components/ecoloop/PortalShell";
 import { getCustomers, customerStats } from "@/lib/ecoloop-store";
 
 export const Route = createFileRoute("/admin/customers")({
-  head: () => ({ meta: [{ title: "Customers · EcoLoop Admin" }] }),
+  head: () => ({ meta: [{ title: "Customers · M-Taka Admin" }] }),
   component: CustomersPage,
 });
 

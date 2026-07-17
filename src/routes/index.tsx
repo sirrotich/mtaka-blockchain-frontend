@@ -5,7 +5,7 @@ import { Logo } from "@/components/ecoloop/Logo";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "EcoLoop by Safaricom — Recycle, earn Green Credits" },
+      { title: "M-Taka by Safaricom — Recycle, earn Green Credits" },
       { name: "description", content: "Track e-waste recycling, monitor your environmental impact, and earn Green Credits at any Safaricom shop." },
     ],
   }),
@@ -44,7 +44,7 @@ function Landing() {
           </span>
         </h1>
         <p className="text-balance mt-6 max-w-2xl text-lg text-muted-foreground">
-          EcoLoop tracks every device lifecycle event across Safaricom shops — rewarding customers
+          M-Taka tracks every device lifecycle event across Safaricom shops — rewarding customers
           for keeping e-waste out of landfills and turning sustainability into a tangible benefit.
         </p>
 
@@ -93,7 +93,7 @@ function Landing() {
       </section>
 
       <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Safaricom PLC · EcoLoop is a sustainability initiative.
+        © {new Date().getFullYear()} Safaricom PLC · M-Taka is a sustainability initiative.
       </footer>
     </div>
   );

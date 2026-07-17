@@ -5,7 +5,7 @@ import { Logo } from "@/components/ecoloop/Logo";
 import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Login · EcoLoop" }] }),
+  head: () => ({ meta: [{ title: "Login · M-Taka" }] }),
   component: LoginPage,
 });
 

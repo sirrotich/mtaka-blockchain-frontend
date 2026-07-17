@@ -7,7 +7,7 @@ import { StatCard } from "@/components/ecoloop/StatCard";
 import { getRecords, globalStats, getCustomers } from "@/lib/ecoloop-store";
 
 export const Route = createFileRoute("/admin/")({
-  head: () => ({ meta: [{ title: "Admin Dashboard · EcoLoop" }] }),
+  head: () => ({ meta: [{ title: "Admin Dashboard · M-taka" }] }),
   component: AdminDashboard,
 });
 

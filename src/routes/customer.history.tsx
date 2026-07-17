@@ -4,7 +4,7 @@ import { PortalShell } from "@/components/ecoloop/PortalShell";
 import { customerStats, getCustomers } from "@/lib/ecoloop-store";
 
 export const Route = createFileRoute("/customer/history")({
-  head: () => ({ meta: [{ title: "Recycling History · EcoLoop" }] }),
+  head: () => ({ meta: [{ title: "Recycling History · M-Taka" }] }),
   component: History,
 });
 

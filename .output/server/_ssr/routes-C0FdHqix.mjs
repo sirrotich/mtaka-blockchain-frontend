@@ -47,7 +47,7 @@ function Landing() {
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						className: "text-balance mt-6 max-w-2xl text-lg text-muted-foreground",
-						children: "EcoLoop tracks every device lifecycle event across Safaricom shops — rewarding customers for keeping e-waste out of landfills and turning sustainability into a tangible benefit."
+						children: "M-Taka tracks every device lifecycle event across Safaricom shops — rewarding customers for keeping e-waste out of landfills and turning sustainability into a tangible benefit."
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "mt-10 grid gap-4 md:grid-cols-2",
@@ -133,7 +133,7 @@ function Landing() {
 				children: [
 					"© ",
 					(/* @__PURE__ */ new Date()).getFullYear(),
-					" Safaricom PLC · EcoLoop is a sustainability initiative."
+					" Safaricom PLC · M-Taka is a sustainability initiative."
 				]
 			})
 		]

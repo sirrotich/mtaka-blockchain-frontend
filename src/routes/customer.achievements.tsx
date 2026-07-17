@@ -3,7 +3,7 @@ import { Recycle, Trophy, User as UserIcon, Wallet } from "lucide-react";
 import { PortalShell } from "@/components/ecoloop/PortalShell";
 
 export const Route = createFileRoute("/customer/achievements")({
-  head: () => ({ meta: [{ title: "Achievements · EcoLoop" }] }),
+  head: () => ({ meta: [{ title: "Achievements · M-Taka" }] }),
   component: AchievementsPage,
 });
 

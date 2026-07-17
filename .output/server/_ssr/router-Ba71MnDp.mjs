@@ -44,14 +44,14 @@ var Route$9 = createRootRouteWithContext()({
 				name: "viewport",
 				content: "width=device-width, initial-scale=1"
 			},
-			{ title: "EcoLoop by Safaricom" },
+			{ title: "M-Taka by Safaricom" },
 			{
 				name: "description",
 				content: "Device lifecycle tracking & Green Credits platform by Safaricom."
 			},
 			{
 				property: "og:title",
-				content: "EcoLoop by Safaricom"
+				content: "M-Taka by Safaricom"
 			},
 			{
 				property: "og:description",
@@ -109,12 +109,12 @@ function RootComponent() {
 }
 var $$splitComponentImporter$8 = () => import("./login-CYezXUhV.mjs");
 var Route$8 = createFileRoute("/login")({
-	head: () => ({ meta: [{ title: "Login · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "Login · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$8, "component")
 });
 var $$splitComponentImporter$7 = () => import("./routes-C0FdHqix.mjs");
 var Route$7 = createFileRoute("/")({
-	head: () => ({ meta: [{ title: "EcoLoop by Safaricom — Recycle, earn Green Credits" }, {
+	head: () => ({ meta: [{ title: "M-Taka by Safaricom — Recycle, earn Green Credits" }, {
 		name: "description",
 		content: "Track e-waste recycling, monitor your environmental impact, and earn Green Credits at any Safaricom shop."
 	}] }),
@@ -122,37 +122,37 @@ var Route$7 = createFileRoute("/")({
 });
 var $$splitComponentImporter$6 = () => import("./customer.index-BXGXOwNQ.mjs");
 var Route$6 = createFileRoute("/customer/")({
-	head: () => ({ meta: [{ title: "My Wallet · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "My Wallet · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
 var $$splitComponentImporter$5 = () => import("./admin.index-DKf1ilJ6.mjs");
 var Route$5 = createFileRoute("/admin/")({
-	head: () => ({ meta: [{ title: "Admin Dashboard · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "Admin Dashboard · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
 var $$splitComponentImporter$4 = () => import("./customer.wallet-CWoFRMjT.mjs");
 var Route$4 = createFileRoute("/customer/wallet")({
-	head: () => ({ meta: [{ title: "Green Wallet · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "Green Wallet · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
 var $$splitComponentImporter$3 = () => import("./customer.history-RWtjc7c6.mjs");
 var Route$3 = createFileRoute("/customer/history")({
-	head: () => ({ meta: [{ title: "Recycling History · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "Recycling History · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
 var $$splitComponentImporter$2 = () => import("./customer.achievements-B4XbZNWC.mjs");
 var Route$2 = createFileRoute("/customer/achievements")({
-	head: () => ({ meta: [{ title: "Achievements · EcoLoop" }] }),
+	head: () => ({ meta: [{ title: "Achievements · M-Taka" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
 var $$splitComponentImporter$1 = () => import("./admin.intake-njVS5e14.mjs");
 var Route$1 = createFileRoute("/admin/intake")({
-	head: () => ({ meta: [{ title: "New Intake · EcoLoop Admin" }] }),
+	head: () => ({ meta: [{ title: "New Intake · M-Taka Admin" }] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
 var $$splitComponentImporter = () => import("./admin.customers-B-7bl2n9.mjs");
 var Route = createFileRoute("/admin/customers")({
-	head: () => ({ meta: [{ title: "Customers · EcoLoop Admin" }] }),
+	head: () => ({ meta: [{ title: "Customers · M-Taka Admin" }] }),
 	component: lazyRouteComponent($$splitComponentImporter, "component")
 });
 var LoginRoute = Route$8.update({
