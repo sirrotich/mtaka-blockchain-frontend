@@ -39,6 +39,9 @@ const YOUTUBE_ID = "SxsjnKOvv-4";
 const BLOG_SOURCE_URL =
   "https://newsroom.safaricom.co.ke/sustainable-future/e-waste-giving-dead-devices-a-second-life/";
 
+  const BLOG_SOURCE_URL_1 =
+  "https://www.safaricom.co.ke/media-center-landing/press-releases/safaricom-to-support-informal-sector-in-e-waste-management/";
+
 const blogPosts = [
   {
     tag: "Origin story",
@@ -53,6 +56,13 @@ const blogPosts = [
     excerpt:
       "Since onboarding certified e-waste handler Warmtech in 2024, over 300 tonnes of servers, switches, and batteries have been processed, with roughly 90% recycled and under 5% reaching a landfill.",
     href: BLOG_SOURCE_URL,
+  },
+  {
+    tag: "Growth",
+    title: "Safaricom To Support Informal Sector In E-Waste Management",
+    excerpt:
+      "s part of our integrated waste management programme we have collected over 1,200 tonnes of e-waste working in partnership with the Waste Electrical and Electronic Equipment Centre in Nairobi, Ministry of Environment, the Communications Authority and the National Environment Management Authority.",
+    href: BLOG_SOURCE_URL_1,
   },
   {
     tag: "Engineering",
