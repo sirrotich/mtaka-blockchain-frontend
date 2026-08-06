@@ -73,7 +73,7 @@ const roadmap = [
   {
     period: "Q4 2026",
     title: "Green Credits marketplace",
-    detail: "Redeem credits for airtime, data bundles, and partner discounts in-app.",
+    detail: "Incentives to reward users for responsible disposal of e-waste.",
     status: "current",
   },
   {
