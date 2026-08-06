@@ -42,6 +42,11 @@ const YOUTUBE_ID = "SxsjnKOvv-4";
 const BLOG_SOURCE_URL =
   "https://newsroom.safaricom.co.ke/sustainable-future/e-waste-giving-dead-devices-a-second-life/";
 
+
+const BLOG_SOURCE_URL_1 =
+"https://www.safaricom.co.ke/media-center-landing/press-releases/safaricom-to-support-informal-sector-in-e-waste-management/";
+
+
 const blogPosts = [
   {
     tag: "Origin story",
@@ -63,6 +68,13 @@ const blogPosts = [
     excerpt:
       "From lithium-ion batteries that outlast lead-acid by years to solar-powered masts and secure data-wiping before disposal, Safaricom's network team is designing waste out from the start.",
     href: BLOG_SOURCE_URL,
+  },
+  {
+    tag: "Growth",
+    title: "Safaricom To Support Informal Sector In E-Waste Management",
+    excerpt:
+      "As part of our integrated waste management programme we have collected over 1,200 tonnes of e-waste working in partnership with the Waste Electrical and Electronic Equipment Centre in Nairobi, Ministry of Environment, the Communications Authority and the National Environment Management Authority.",
+    href: BLOG_SOURCE_URL_1,
   },
 ];
 
@@ -101,10 +113,10 @@ const roadmap = [
     period: "24+ months",
     label: "Ecosystem",
     icon: Globe2,
-    title: "Go Global",
+    title: "Go global",
     detail:
-      "Evolve from operator to infrastructure the compliance and data backbone for the continent's circular economy.​.",
-    tags: ["EPR-as-a-Service​", "ESG Reporting​", "AI Optimization​"],
+      "Evolve from operator to infrastructure — the compliance and data backbone for the continent's circular economy.",
+    tags: ["EPR-as-a-Service", "ESG Reporting", "AI Optimization"],
     status: "upcoming",
   },
 ];
@@ -150,19 +162,7 @@ function Landing() {
           </a>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-3 md:mt-16 md:gap-6">
-          {[
-            { i: Recycle, t: "12,547 devices", s: "Recycled responsibly" },
-            { i: Leaf, t: "18.4 Tons", s: "Of CO2 saved" },
-            { i: ShieldCheck, t: "8,912 members", s: "In the Green Circle" },
-          ].map((x) => (
-            <div key={x.t} className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur">
-              <x.i className="h-5 w-5 text-primary" />
-              <div className="mt-3 font-display text-xl font-bold sm:text-2xl">{x.t}</div>
-              <div className="text-sm text-muted-foreground">{x.s}</div>
-            </div>
-          ))}
-        </div>
+     
       </section>
 
       {/* WATCH — main YouTube video */}
@@ -172,10 +172,10 @@ function Landing() {
             <PlayCircle className="h-3.5 w-3.5" /> See it in action
           </div>
           <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            How M-Taka works
+            M-taka on the Move
           </h2>
           <p className="mt-3 text-muted-foreground">
-            A quick walkthrough of dropping off a device and earning Green Credits.
+            A quick walkthrough of e-waste collection and recyling.
           </p>
         </div>
 
@@ -242,60 +242,76 @@ function Landing() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-5xl gap-5 sm:grid-cols-3">
-          {roadmap.map((step, idx) => (
-            <div key={step.period} className="relative">
-              {/* connector line to next stage, desktop only */}
-              {idx < roadmap.length - 1 && (
-                <div className="absolute right-0 top-6 hidden h-px w-5 translate-x-full bg-border sm:block" />
-              )}
-              <div
-                className={`h-full rounded-2xl border p-5 backdrop-blur transition ${
-                  step.status === "current"
-                    ? "border-primary/40 bg-primary/5 shadow-sm"
-                    : "border-border bg-card/60"
-                }`}
-              >
-                <div className="flex items-center justify-between">
+        {/* Mobile: vertical line. Desktop (sm+): horizontal line. */}
+        <div className="mx-auto mt-10 max-w-5xl">
+          {/* horizontal line, desktop */}
+          <div className="hidden sm:block">
+            <div className="relative grid grid-cols-4 gap-4">
+              <div className="absolute left-0 right-0 top-5 h-px bg-border" />
+              {roadmap.map((step) => (
+                <div key={step.period} className="relative flex flex-col items-start">
                   <span
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${
+                    className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-background ${
                       step.status === "current"
-                        ? "bg-primary text-primary-foreground"
+                        ? "bg-primary text-primary-foreground ring-4 ring-primary/15"
                         : "bg-muted text-muted-foreground"
                     }`}
                   >
                     <step.icon className="h-4.5 w-4.5" />
                   </span>
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      step.status === "current"
-                        ? "bg-primary/15 text-primary"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {step.label}
-                  </span>
+                  <div className="mt-4 text-xs font-semibold uppercase tracking-wide text-primary">
+                    {step.period} · {step.label}
+                  </div>
+                  <h3 className="mt-1 font-display text-base font-bold leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {step.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-border bg-card/60 px-2 py-0.5 text-[11px] text-muted-foreground"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
 
-                <div className="mt-4 text-xs font-semibold uppercase tracking-wide text-primary">
-                  {step.period}
+          {/* vertical line, mobile */}
+          <ol className="relative space-y-8 border-l border-border pl-6 sm:hidden">
+            {roadmap.map((step) => (
+              <li key={step.period} className="relative">
+                <span
+                  className={`absolute -left-[31px] flex h-8 w-8 items-center justify-center rounded-full border-2 border-background ${
+                    step.status === "current"
+                      ? "bg-primary text-primary-foreground ring-4 ring-primary/15"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  <step.icon className="h-3.5 w-3.5" />
+                </span>
+                <div className="text-xs font-semibold uppercase tracking-wide text-primary">
+                  {step.period} · {step.label}
                 </div>
-                <h3 className="mt-1 font-display text-lg font-bold">{step.title}</h3>
+                <h3 className="mt-1 font-display text-base font-bold">{step.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
-
-                <div className="mt-4 flex flex-wrap gap-1.5">
+                <div className="mt-3 flex flex-wrap gap-1.5">
                   {step.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-xs text-muted-foreground"
+                      className="rounded-full border border-border bg-card/60 px-2 py-0.5 text-[11px] text-muted-foreground"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-              </div>
-            </div>
-          ))}
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
