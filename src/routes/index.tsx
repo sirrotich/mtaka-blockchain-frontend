@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import {
   ArrowRight,
   Leaf,
@@ -14,6 +15,8 @@ import {
   Rocket,
   TrendingUp,
   Globe2,
+  Calculator,
+  Coins,
 } from "lucide-react";
 import { Logo } from "@/components/ecoloop/Logo";
 
@@ -121,6 +124,103 @@ const roadmap = [
   },
 ];
 
+
+
+
+// Rough multipliers per device type — adjust to your real figures.
+const DEVICE_TYPES = [
+  { id: "phone", label: "Phones", co2PerUnit: 1.47, creditsPerUnit: 50 },
+  { id: "tablet", label: "Tablets", co2PerUnit: 3.1, creditsPerUnit: 90 },
+  { id: "laptop", label: "Laptops", co2PerUnit: 6.4, creditsPerUnit: 150 },
+  { id: "router", label: "Routers/Modems", co2PerUnit: 0.9, creditsPerUnit: 30 },
+];
+
+function ImpactCalculator() {
+  const [devices, setDevices] = useState(3);
+  const [deviceType, setDeviceType] = useState(DEVICE_TYPES[0].id);
+
+  const active = DEVICE_TYPES.find((d) => d.id === deviceType) ?? DEVICE_TYPES[0];
+
+  const { co2, credits } = useMemo(
+    () => ({
+      co2: (devices * active.co2PerUnit).toFixed(1),
+      credits: devices * active.creditsPerUnit,
+    }),
+    [devices, active]
+  );
+
+  return (
+    <div className="mx-auto max-w-xl rounded-xl border border-border bg-card/60 p-3 backdrop-blur sm:p-4">
+      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-primary">
+        <Calculator className="h-3 w-3" /> Try it
+      </div>
+      <h3 className="mt-1 font-display text-sm font-bold sm:text-base">
+        How much could your old devices be worth?
+      </h3>
+
+      <div className="mt-2 flex flex-wrap gap-1">
+        {DEVICE_TYPES.map((d) => (
+          <button
+            key={d.id}
+            type="button"
+            onClick={() => setDeviceType(d.id)}
+            className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold transition ${
+              d.id === deviceType
+                ? "border-primary/40 bg-primary/15 text-primary"
+                : "border-border bg-background/60 text-muted-foreground hover:bg-background"
+            }`}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-2.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-muted-foreground">Number of {active.label.toLowerCase()}</span>
+          <span className="font-display text-sm font-bold text-primary">{devices}</span>
+        </div>
+        <input
+          type="range"
+          min={1}
+          max={20}
+          value={devices}
+          onChange={(e) => setDevices(Number(e.target.value))}
+          className="mt-1.5 h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+          aria-label="Number of devices"
+        />
+      </div>
+
+      <div className="mt-2.5 grid grid-cols-2 gap-2">
+        <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-2.5 py-1.5">
+          <Leaf className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <div className="leading-tight">
+            <div className="font-display text-sm font-bold">{co2} kg</div>
+            <div className="text-[10px] text-muted-foreground">CO2 saved</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-2.5 py-1.5">
+          <Coins className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <div className="leading-tight">
+            <div className="font-display text-sm font-bold">{credits}</div>
+            <div className="text-[10px] text-muted-foreground">Green Credits</div>
+          </div>
+        </div>
+      </div>
+
+      <Link
+        to="/"
+        className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:bg-primary-dark sm:w-auto"
+      >
+        Find a shop to redeem this <ArrowRight className="h-3 w-3" />
+      </Link>
+    </div>
+  );
+}
+
+
+
+
 function Landing() {
   return (
     <div className="min-h-screen bg-background">
@@ -164,6 +264,13 @@ function Landing() {
 
      
       </section>
+
+      
+        {/* IMPACT CALCULATOR */}
+        <section className="mx-auto max-w-6xl px-6 pb-8 md:pb-10">
+        <ImpactCalculator />
+      </section>
+
 
       {/* WATCH — main YouTube video */}
       <section id="watch" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
