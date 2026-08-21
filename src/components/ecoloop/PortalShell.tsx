@@ -19,14 +19,13 @@ export function PortalShell({
   subtitle?: string;
   children: React.ReactNode;
   badge?: string;
-  requiredRole: Role | Role[];
+  requiredRole?: Role | Role[];   // ← was required, now optional
 }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const navigate = useNavigate();
+  ...
   const { user, loading } = useRequireRole(requiredRole);
   const { logout } = useAuth();
 
-  if (loading || !user) {
+  if (loading) {                  // ← was `if (loading || !user)`
     return (
       <div className="grid min-h-screen place-items-center text-sm text-muted-foreground">
         Loading…
