@@ -50,17 +50,18 @@ export function useAuth() {
  * Redirects to /login if there's no session, or the session's role
  * doesn't match what the page requires.
  */
-export function useRequireRole(role: Role | Role[]) {
+export function useRequireRole(role?: Role | Role[]) {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const allowed = Array.isArray(role) ? role : [role];
+  const allowed = role ? (Array.isArray(role) ? role : [role]) : null;
 
   useEffect(() => {
     if (loading) return;
+    if (!allowed) return; // no role required — public page, skip the gate entirely
     if (!user || !allowed.includes(user.role)) {
       navigate({ to: "/login" });
     }
-  }, [user, loading, navigate]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user, loading, navigate, allowed]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { user, loading };
 }
