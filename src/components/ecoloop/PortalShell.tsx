@@ -19,14 +19,14 @@ export function PortalShell({
   subtitle?: string;
   children: React.ReactNode;
   badge?: string;
-  requiredRole: Role | Role[];
+  requiredRole?: Role | Role[];
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const { user, loading } = useRequireRole(requiredRole);
   const { logout } = useAuth();
 
-  if (loading || !user) {
+  if (loading) {
     return (
       <div className="grid min-h-screen place-items-center text-sm text-muted-foreground">
         Loading…
@@ -96,19 +96,23 @@ export function PortalShell({
             <button className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground">
               <Bell className="h-4 w-4" />
             </button>
-            <button
-              onClick={() => {
-                logout();
-                navigate({ to: "/login" });
-              }}
-              title="Log out"
-              className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-destructive"
-            >
-              <LogOut className="h-4 w-4" />
-            </button>
-            <div className="brand-gradient grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-primary-foreground">
-              {user.username.slice(0, 1).toUpperCase()}
-            </div>
+            {user && (
+              <button
+                onClick={() => {
+                  logout();
+                  navigate({ to: "/login" });
+                }}
+                title="Log out"
+                className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-destructive"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            )}
+            {user && (
+              <div className="brand-gradient grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-primary-foreground">
+                {user.username.slice(0, 1).toUpperCase()}
+              </div>
+            )}
           </header>
           <div className="px-4 py-6 md:px-8 md:py-8">{children}</div>
         </main>
