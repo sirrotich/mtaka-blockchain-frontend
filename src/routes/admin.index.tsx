@@ -51,7 +51,7 @@ function AdminDashboard() {
   }, [records]);
 
   return (
-    <PortalShell nav={NAV} title="Operations Dashboard" subtitle="Live recycling activity across all Safaricom shops" badge="Admin Portal" requiredRole={["admin", "shop"]}>
+    <PortalShell nav={NAV} title="Operations Dashboard" subtitle="Live recycling activity across all Safaricom shops" badge="Admin Portal">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h2 className="font-display text-2xl font-bold md:hidden">Operations</h2>
