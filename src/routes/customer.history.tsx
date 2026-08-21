@@ -19,7 +19,7 @@ function History() {
   const c = getCustomers()[0];
   const { records } = customerStats(c.id);
   return (
-    <PortalShell nav={NAV} title="Recycling History" subtitle="Every device, every credit, every gram of CO₂ saved" badge="Customer Portal" requiredRole="customer">
+    <PortalShell nav={NAV} title="Recycling History" subtitle="Every device, every credit, every gram of CO₂ saved" badge="Customer Portal" >
       <div className="relative ml-3 border-l-2 border-dashed border-primary/30 pl-8">
         {records.length === 0 && (
           <div className="rounded-2xl border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
