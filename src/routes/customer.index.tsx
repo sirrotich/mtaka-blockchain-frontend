@@ -48,7 +48,7 @@ function CustomerDashboard() {
   }, [stats.records]);
 
   return (
-    <PortalShell nav={NAV} title={`Welcome, ${customer.fullName.split(" ")[0]}`} subtitle="Together we're building a greener future" badge="Customer Portal" requiredRole="customer">
+    <PortalShell nav={NAV} title={`Welcome, ${customer.fullName.split(" ")[0]}`} subtitle="Together we're building a greener future" badge="Customer Portal">
       {/* Hero */}
       <div className="brand-gradient relative overflow-hidden rounded-3xl p-6 text-primary-foreground md:p-8">
         <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
