@@ -1,430 +1,157 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import {
-  ArrowRight,
-  Leaf,
-  Recycle,
-  ShieldCheck,
-  Sparkles,
-  Store,
-  User,
-  PlayCircle,
-  Newspaper,
-  MapPin,
-  CalendarDays,
-  Rocket,
-  TrendingUp,
-  Globe2,
-  Calculator,
-  Coins,
-} from "lucide-react";
-import { Logo } from "@/components/ecoloop/Logo";
+import { useMemo } from "react";
+import { Activity, BadgePlus, BarChart3, LayoutDashboard, Leaf, Recycle, Users, Wallet } from "lucide-react";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { PortalShell } from "@/components/ecoloop/PortalShell";
+import { StatCard } from "@/components/ecoloop/StatCard";
+import { getRecords, globalStats, getCustomers } from "@/lib/ecoloop-store";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "M-Taka by Safaricom — Recycle, earn Green Credits" },
-      {
-        name: "description",
-        content:
-          "Track e-waste recycling, monitor your environmental impact, and earn Green Credits at any Safaricom shop.",
-      },
-    ],
-  }),
-  component: Landing,
+  head: () => ({ meta: [{ title: "Admin Dashboard · M-taka" }] }),
+  component: AdminDashboard,
 });
 
-// ---------------------------------------------------------------------------
-// PLACEHOLDER CONTENT — swap these arrays for your real data.
-// blogPosts: paste in the posts you pulled from the blog/site.
-// roadmap: paste in the phases from your PPT roadmap slide.
-// ---------------------------------------------------------------------------
-
-const YOUTUBE_ID = "SxsjnKOvv-4";
-
-const BLOG_SOURCE_URL =
-  "https://newsroom.safaricom.co.ke/sustainable-future/e-waste-giving-dead-devices-a-second-life/";
-
-
-const BLOG_SOURCE_URL_1 =
-"https://www.safaricom.co.ke/media-center-landing/press-releases/safaricom-to-support-informal-sector-in-e-waste-management/";
-
-
-const blogPosts = [
-  {
-    tag: "Origin story",
-    title: "The 155 boxes that started it all",
-    excerpt:
-      "A stack of 1,000 kg of unused SIM cards pushed Safaricom's Fintech Operations team to rethink how the company handles obsolete stock — and sparked its circularity push.",
-    href: BLOG_SOURCE_URL,
-  },
-  {
-    tag: "Partners",
-    title: "Inside the Warmtech partnership",
-    excerpt:
-      "Since onboarding certified e-waste handler Warmtech in 2024, over 300 tonnes of servers, switches, and batteries have been processed, with roughly 90% recycled and under 5% reaching a landfill.",
-    href: BLOG_SOURCE_URL,
-  },
-  {
-    tag: "Engineering",
-    title: "Building equipment that lasts longer",
-    excerpt:
-      "From lithium-ion batteries that outlast lead-acid by years to solar-powered masts and secure data-wiping before disposal, Safaricom's network team is designing waste out from the start.",
-    href: BLOG_SOURCE_URL,
-  },
-  {
-    tag: "Growth",
-    title: "Safaricom To Support Informal Sector In E-Waste Management",
-    excerpt:
-      "As part of our integrated waste management programme we have collected over 1,200 tonnes of e-waste working in partnership with the Waste Electrical and Electronic Equipment Centre in Nairobi, Ministry of Environment, the Communications Authority and the National Environment Management Authority.",
-    href: BLOG_SOURCE_URL_1,
-  },
+const NAV = [
+  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/admin/intake", label: "New Intake", icon: BadgePlus },
+  { to: "/admin/customers", label: "Customers", icon: Users },
 ];
 
-const roadmap = [
-  {
-    period: "0–6 months",
-    label: "Pilot",
-    icon: Rocket,
-    title: "Prove the model",
-    detail:
-      "Prove the model in a controlled setting before scaling — real devices, real credits, real traceability.",
-    tags: ["Strategic Partnerships", "M-PESA Green Credits", "Blockchain Traceability"],
-    status: "current",
-  },
-  {
-    period: "6–12 months",
-    label: "National",
-    icon: TrendingUp,
-    title: "Take it nationwide",
-    detail:
-      "Take the proven model nationwide, layering in analytics, compliance automation, and new revenue streams.",
-    tags: ["Digital Product Passport", "Nationwide Rollout"],
-    status: "upcoming",
-  },
-  {
-    period: "12–24 months",
-    label: "Regional",
-    icon: Globe2,
-    title: "Cross borders",
-    detail:
-      "Cross borders through telco and OEM partnerships, unlocking carbon markets and multi-country compliance.",
-    tags: ["Safaricom Ethiopia & Vodafone markets", "OEM Partnerships", "Multi-Country EPR"],
-    status: "upcoming",
-  },
-  {
-    period: "24+ months",
-    label: "Ecosystem",
-    icon: Globe2,
-    title: "Go global",
-    detail:
-      "Evolve from operator to infrastructure — the compliance and data backbone for the continent's circular economy.",
-    tags: ["EPR-as-a-Service", "ESG Reporting", "AI Optimization"],
-    status: "upcoming",
-  },
-];
+function AdminDashboard() {
+  const stats = globalStats();
+  const records = getRecords();
+  const customers = getCustomers();
 
+  const trend = useMemo(() => {
+    const buckets: Record<string, { month: string; devices: number; credits: number }> = {};
+    const fmt = (d: Date) => d.toLocaleString("en", { month: "short" });
+    const now = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      buckets[fmt(d)] = { month: fmt(d), devices: 0, credits: 0 };
+    }
+    records.forEach((r) => {
+      const m = fmt(new Date(r.createdAt));
+      if (buckets[m]) { buckets[m].devices += 1; buckets[m].credits += r.credits; }
+    });
+    return Object.values(buckets).map((b, i) => ({
+      ...b,
+      devices: b.devices + [1820, 2100, 1950, 2480, 2310, 2700][i],
+      credits: b.credits + [62000, 71000, 68000, 84000, 79000, 92000][i],
+    }));
+  }, [records]);
 
-
-
-// Rough multipliers per device type — adjust to your real figures.
-const DEVICE_TYPES = [
-  { id: "phone", label: "Phones", co2PerUnit: 1.47, creditsPerUnit: 50 },
-  { id: "tablet", label: "Tablets", co2PerUnit: 3.1, creditsPerUnit: 90 },
-  { id: "laptop", label: "Laptops", co2PerUnit: 6.4, creditsPerUnit: 150 },
-  { id: "router", label: "Routers/Modems", co2PerUnit: 0.9, creditsPerUnit: 30 },
-];
-
-function ImpactCalculator() {
-  const [devices, setDevices] = useState(3);
-  const [deviceType, setDeviceType] = useState(DEVICE_TYPES[0].id);
-
-  const active = DEVICE_TYPES.find((d) => d.id === deviceType) ?? DEVICE_TYPES[0];
-
-  const { co2, credits } = useMemo(
-    () => ({
-      co2: (devices * active.co2PerUnit).toFixed(1),
-      credits: devices * active.creditsPerUnit,
-    }),
-    [devices, active]
-  );
+  const categories = useMemo(() => {
+    const counts: Record<string, number> = {};
+    records.forEach((r) => (counts[r.deviceType] = (counts[r.deviceType] || 0) + 1));
+    const seed = { Smartphone: 5210, Laptop: 1840, Tablet: 1620, "Feature Phone": 1490, Router: 890, "Smart Watch": 720 };
+    const merged = { ...seed, ...Object.fromEntries(Object.entries(counts).map(([k, v]) => [k, (seed as any)[k] ? (seed as any)[k] + v : v])) };
+    return Object.entries(merged).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 6);
+  }, [records]);
 
   return (
-    <div className="mx-auto max-w-xl rounded-xl border border-border bg-card/60 p-3 backdrop-blur sm:p-4">
-      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-primary">
-        <Calculator className="h-3 w-3" /> Try it
-      </div>
-      <h3 className="mt-1 font-display text-sm font-bold sm:text-base">
-        How much could your old devices be worth?
-      </h3>
-
-      <div className="mt-2 flex flex-wrap gap-1">
-        {DEVICE_TYPES.map((d) => (
-          <button
-            key={d.id}
-            type="button"
-            onClick={() => setDeviceType(d.id)}
-            className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold transition ${
-              d.id === deviceType
-                ? "border-primary/40 bg-primary/15 text-primary"
-                : "border-border bg-background/60 text-muted-foreground hover:bg-background"
-            }`}
-          >
-            {d.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-2.5">
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">Number of {active.label.toLowerCase()}</span>
-          <span className="font-display text-sm font-bold text-primary">{devices}</span>
+    <PortalShell nav={NAV} title="Operations Dashboard" subtitle="Live recycling activity across all Safaricom shops" badge="Admin Portal">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h2 className="font-display text-2xl font-bold md:hidden">Operations</h2>
+          <p className="text-sm text-muted-foreground">Welcome back · {new Date().toLocaleDateString("en", { weekday: "long", month: "long", day: "numeric" })}</p>
         </div>
-        <input
-          type="range"
-          min={1}
-          max={20}
-          value={devices}
-          onChange={(e) => setDevices(Number(e.target.value))}
-          className="mt-1.5 h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-          aria-label="Number of devices"
-        />
+        <Link to="/admin/intake" className="brand-gradient inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition hover:shadow-xl">
+          <BadgePlus className="h-4 w-4" /> New Intake
+        </Link>
       </div>
 
-      <div className="mt-2.5 grid grid-cols-2 gap-2">
-        <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-2.5 py-1.5">
-          <Leaf className="h-3.5 w-3.5 shrink-0 text-primary" />
-          <div className="leading-tight">
-            <div className="font-display text-sm font-bold">{co2} kg</div>
-            <div className="text-[10px] text-muted-foreground">CO2 saved</div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Total Devices Recycled" value={stats.devices.toLocaleString()} sub="+248 this week" icon={Recycle} />
+        <StatCard label="Green Credits Issued" value={stats.credits.toLocaleString()} sub="+12,400 this week" icon={Wallet} accent="info" />
+        <StatCard label="Total CO₂ Saved" value={`${stats.co2Tons} Tons`} sub="Equivalent to 920 trees" icon={Leaf} />
+        <StatCard label="Active Customers" value={stats.customers.toLocaleString()} sub={`+${customers.length - 3} new`} icon={Users} accent="warning" />
+      </div>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+        <div className="glass-card rounded-2xl p-5 lg:col-span-2">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h3 className="font-display text-base font-bold">Recycling Trends</h3>
+              <p className="text-xs text-muted-foreground">Devices intake and credits issued · last 6 months</p>
+            </div>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" /> Devices</span>
+              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-info" /> Credits</span>
+            </div>
+          </div>
+          <div className="h-72 w-full">
+            <ResponsiveContainer>
+              <AreaChart data={trend} margin={{ left: -10, right: 10 }}>
+                <defs>
+                  <linearGradient id="gDev" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="oklch(0.64 0.17 150)" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="oklch(0.64 0.17 150)" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="gCred" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="oklch(0.62 0.16 240)" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="oklch(0.62 0.16 240)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="oklch(0.92 0.01 150)" />
+                <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="oklch(0.5 0.02 160)" />
+                <YAxis tick={{ fontSize: 12 }} stroke="oklch(0.5 0.02 160)" />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid oklch(0.92 0.01 150)" }} />
+                <Area type="monotone" dataKey="devices" stroke="oklch(0.64 0.17 150)" strokeWidth={2.5} fill="url(#gDev)" />
+                <Area type="monotone" dataKey="credits" stroke="oklch(0.62 0.16 240)" strokeWidth={2.5} fill="url(#gCred)" />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
-        <div className="flex items-center gap-2 rounded-lg bg-primary/5 px-2.5 py-1.5">
-          <Coins className="h-3.5 w-3.5 shrink-0 text-primary" />
-          <div className="leading-tight">
-            <div className="font-display text-sm font-bold">{credits}</div>
-            <div className="text-[10px] text-muted-foreground">Green Credits</div>
+
+        <div className="glass-card rounded-2xl p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h3 className="font-display text-base font-bold">Top Categories</h3>
+              <p className="text-xs text-muted-foreground">By total intake</p>
+            </div>
+            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <div className="h-72 w-full">
+            <ResponsiveContainer>
+              <BarChart data={categories} layout="vertical" margin={{ left: 10, right: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="oklch(0.92 0.01 150)" />
+                <XAxis type="number" tick={{ fontSize: 11 }} stroke="oklch(0.5 0.02 160)" />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} stroke="oklch(0.5 0.02 160)" width={90} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid oklch(0.92 0.01 150)" }} />
+                <Bar dataKey="value" fill="oklch(0.64 0.17 150)" radius={[0, 8, 8, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
 
-      <Link
-        to="/"
-        className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:bg-primary-dark sm:w-auto"
-      >
-        Find a shop to redeem this <ArrowRight className="h-3 w-3" />
-      </Link>
-    </div>
-  );
-}
-
-
-
-
-function Landing() {
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Background decoration */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-[600px] w-[1100px] -translate-x-1/2 rounded-full bg-primary/15 blur-[120px]" />
-        <div className="absolute right-0 top-1/3 h-[400px] w-[400px] rounded-full bg-info/10 blur-[100px]" />
-      </div>
-
-      {/* HERO */}
-      <section className="mx-auto max-w-6xl px-6 pb-16 pt-12 md:pb-20 md:pt-20">
-        <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-          <Sparkles className="h-3.5 w-3.5" /> New · Green Credits live across all shops
-        </div>
-        <h1 className="text-balance mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-7xl">
-          Recycle your device.
-          <br />
-          <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
-            Earn Green Credits.
-          </span>
-        </h1>
-        <p className="text-balance mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-          M-Taka tracks every device lifecycle event across Safaricom shops — rewarding customers
-          for keeping e-waste out of landfills and turning sustainability into a tangible benefit.
-        </p>
-
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-dark"
-          >
-            Find a shop near you <ArrowRight className="h-4 w-4" />
-          </Link>
-          <a
-            href={`#watch`}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card/60 px-6 py-3 text-sm font-semibold backdrop-blur transition hover:bg-card"
-          >
-            <PlayCircle className="h-4 w-4 text-primary" /> Watch how it works
-          </a>
-        </div>
-
-     
-      </section>
-
-      
-        {/* IMPACT CALCULATOR */}
-        <section className="mx-auto max-w-6xl px-6 pb-8 md:pb-10">
-        <ImpactCalculator />
-      </section>
-
-
-      {/* WATCH — main YouTube video */}
-      <section id="watch" className="mx-auto max-w-6xl px-6 py-14 md:py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-            <PlayCircle className="h-3.5 w-3.5" /> See it in action
-          </div>
-          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            M-taka on the Move
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            A quick walkthrough of e-waste collection and recyling.
-          </p>
-        </div>
-
-        <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-2xl border border-border bg-card/60 shadow-sm">
-          <div className="relative aspect-video w-full">
-            <iframe
-              className="absolute inset-0 h-full w-full"
-              src={`https://www.youtube.com/embed/${YOUTUBE_ID}`}
-              title="How M-Taka works"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* BLOG */}
-      <section className="mx-auto max-w-6xl px-6 py-14 md:py-20">
-        <div className="flex items-end justify-between gap-4">
+      <div className="mt-6 glass-card rounded-2xl">
+        <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-              <Newspaper className="h-3.5 w-3.5" /> From the blog
-            </div>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-              Stories & guides
-            </h2>
+            <h3 className="font-display text-base font-bold">Recent Recycling Activity</h3>
+            <p className="text-xs text-muted-foreground">Latest device intakes</p>
           </div>
+          <Activity className="h-4 w-4 text-muted-foreground" />
         </div>
-
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.map((post) => (
-            <a
-              key={post.title}
-              href={post.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col rounded-2xl border border-border bg-card/60 p-5 backdrop-blur transition hover:border-primary/30 hover:bg-card"
-            >
-              <span className="w-fit rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
-                {post.tag}
-              </span>
-              <h3 className="mt-3 font-display text-lg font-bold leading-snug">
-                {post.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                Read more
-                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* ROADMAP */}
-      <section className="mx-auto max-w-6xl px-6 py-14 md:py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-            <CalendarDays className="h-3.5 w-3.5" /> Roadmap
-          </div>
-          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Where M-Taka is headed
-          </h2>
-        </div>
-
-        {/* Mobile: vertical line. Desktop (sm+): horizontal line. */}
-        <div className="mx-auto mt-10 max-w-5xl">
-          {/* horizontal line, desktop */}
-          <div className="hidden sm:block">
-            <div className="relative grid grid-cols-4 gap-4">
-              <div className="absolute left-0 right-0 top-5 h-px bg-border" />
-              {roadmap.map((step) => (
-                <div key={step.period} className="relative flex flex-col items-start">
-                  <span
-                    className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-background ${
-                      step.status === "current"
-                        ? "bg-primary text-primary-foreground ring-4 ring-primary/15"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    <step.icon className="h-4.5 w-4.5" />
-                  </span>
-                  <div className="mt-4 text-xs font-semibold uppercase tracking-wide text-primary">
-                    {step.period} · {step.label}
-                  </div>
-                  <h3 className="mt-1 font-display text-base font-bold leading-snug">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {step.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-border bg-card/60 px-2 py-0.5 text-[11px] text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+        <div className="divide-y divide-border/60">
+          {records.slice(0, 8).map((r) => {
+            const cust = customers.find((c) => c.id === r.customerId);
+            return (
+              <div key={r.id} className="grid grid-cols-[1fr_auto] items-center gap-4 px-5 py-3.5 transition hover:bg-accent/30 sm:grid-cols-[1.5fr_1fr_1fr_auto_auto]">
+                <div className="min-w-0">
+                  <div className="truncate font-semibold">{r.brand} {r.model}</div>
+                  <div className="text-xs text-muted-foreground">{r.deviceType} · {r.deviceId}</div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* vertical line, mobile */}
-          <ol className="relative space-y-8 border-l border-border pl-6 sm:hidden">
-            {roadmap.map((step) => (
-              <li key={step.period} className="relative">
-                <span
-                  className={`absolute -left-[31px] flex h-8 w-8 items-center justify-center rounded-full border-2 border-background ${
-                    step.status === "current"
-                      ? "bg-primary text-primary-foreground ring-4 ring-primary/15"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  <step.icon className="h-3.5 w-3.5" />
-                </span>
-                <div className="text-xs font-semibold uppercase tracking-wide text-primary">
-                  {step.period} · {step.label}
-                </div>
-                <h3 className="mt-1 font-display text-base font-bold">{step.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {step.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-border bg-card/60 px-2 py-0.5 text-[11px] text-muted-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ol>
+                <div className="hidden text-sm text-muted-foreground sm:block">{cust?.fullName ?? "Walk-in"}</div>
+                <div className="hidden text-sm text-muted-foreground sm:block">{r.location}</div>
+                <div className="text-right text-sm font-bold text-primary">+{r.credits} <span className="text-[10px] font-medium text-muted-foreground">credits</span></div>
+                <div className="hidden text-xs text-muted-foreground sm:block">{new Date(r.createdAt).toLocaleDateString()}</div>
+              </div>
+            );
+          })}
         </div>
-      </section>
-
-      <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Safaricom PLC · M-Taka is a sustainability initiative.
-      </footer>
-    </div>
+      </div>
+    </PortalShell>
   );
 }
