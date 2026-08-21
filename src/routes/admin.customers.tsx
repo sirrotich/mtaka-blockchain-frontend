@@ -21,7 +21,7 @@ function CustomersPage() {
     !q || c.fullName.toLowerCase().includes(q.toLowerCase()) || c.phone.includes(q) || c.nationalId.includes(q)
   );
   return (
-    <PortalShell nav={NAV} title="Customers" subtitle="All registered Green Circle members" badge="Admin Portal" requiredRole={["admin", "shop"]}>
+    <PortalShell nav={NAV} title="Customers" subtitle="All registered Green Circle members" badge="Admin Portal">
       <div className="glass-card flex items-center gap-3 rounded-2xl p-3">
         <Search className="ml-2 h-4 w-4 text-muted-foreground" />
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name, phone or ID…"
