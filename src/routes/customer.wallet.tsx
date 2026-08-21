@@ -42,7 +42,7 @@ function WalletPage() {
   }
   if (!profile) {
     return (
-      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal" >
+      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal">
         <div className="text-sm text-muted-foreground">Loading…</div>
       </PortalShell>
     );
