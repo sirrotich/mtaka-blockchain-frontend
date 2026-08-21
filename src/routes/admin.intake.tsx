@@ -51,7 +51,7 @@ function IntakeFlow() {
   };
 
   return (
-    <PortalShell nav={NAV} title="New Device Intake" subtitle="3-step recycling flow" badge="Admin Portal" requiredRole={["admin", "shop"]}>
+    <PortalShell nav={NAV} title="New Device Intake" subtitle="3-step recycling flow" badge="Admin Portal" >
       <Stepper step={step} />
       <div className="mt-6">
         {step === 1 && (
