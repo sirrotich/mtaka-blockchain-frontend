@@ -27,7 +27,7 @@ const BADGES = [
 
 function AchievementsPage() {
   return (
-    <PortalShell nav={NAV} title="Achievements" subtitle="Earn badges as you make an impact" badge="Customer Portal" requiredRole="customer">
+    <PortalShell nav={NAV} title="Achievements" subtitle="Earn badges as you make an impact" badge="Customer Portal">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {BADGES.map(b => (
           <div key={b.n} className={`glass-card flex flex-col items-center rounded-2xl p-5 text-center ${b.u ? "" : "opacity-90"}`}>
