@@ -105,9 +105,11 @@ export function PortalShell({
             >
               <LogOut className="h-4 w-4" />
             </button>
-            <div className="brand-gradient grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-primary-foreground">
-              {user.username.slice(0, 1).toUpperCase()}
-            </div>
+            {user && (
+  <div className="brand-gradient grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-primary-foreground">
+    {user.username.slice(0, 1).toUpperCase()}
+  </div>
+)}
           </header>
           <div className="px-4 py-6 md:px-8 md:py-8">{children}</div>
         </main>
