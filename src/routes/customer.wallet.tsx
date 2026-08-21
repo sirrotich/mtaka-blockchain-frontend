@@ -35,14 +35,14 @@ function WalletPage() {
 
   if (error) {
     return (
-      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal" requiredRole="customer">
+      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal">
         <div className="rounded-xl bg-destructive/10 p-4 text-sm text-destructive">{error}</div>
       </PortalShell>
     );
   }
   if (!profile) {
     return (
-      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal" requiredRole="customer">
+      <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal" >
         <div className="text-sm text-muted-foreground">Loading…</div>
       </PortalShell>
     );
@@ -54,7 +54,7 @@ function WalletPage() {
     .reduce((sum, h) => sum + Number(h.amount), 0);
 
   return (
-    <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal" requiredRole="customer">
+    <PortalShell nav={NAV} title="Green Wallet" subtitle="Your sustainability currency" badge="Customer Portal">
       <div className="brand-gradient relative overflow-hidden rounded-3xl p-8 text-primary-foreground">
         <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
         <div className="relative grid gap-6 md:grid-cols-2">
